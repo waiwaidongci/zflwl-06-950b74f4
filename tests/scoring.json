@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "weight_policy": {
+    "version": 1,
+    "basis": "business_priority",
+    "core_min_share": 0.5
+  },
+  "gate_tests": [
+    "test_outputs.py::test_joint_structure_recovers_matches_run_orders_and_breaks"
+  ],
+  "tests": {
+    "test_outputs.py::test_alternate_break_vector_is_selected_globally": {
+      "weight": 0.14,
+      "priority": "core",
+      "rationale": "换一个公共断点后仍须恢复全部设备映射，直接检验联合结构推理而非固定位置。"
+    },
+    "test_outputs.py::test_four_regime_archive_recovers_three_shared_breaks": {
+      "weight": 0.14,
+      "priority": "core",
+      "rationale": "四段结构要求同时还原三个公共切换点，决定多阶段漂移档案能否正确分段。"
+    },
+    "test_outputs.py::test_swapped_run_orders_do_not_follow_input_positions": {
+      "weight": 0.14,
+      "priority": "core",
+      "rationale": "本地轮次顺序丢失时，错误轮次映射会连带污染设备归属和后续漂移估计。"
+    },
+    "test_outputs.py::test_drift_steps_follow_local_run_order_and_regimes": {
+      "weight": 0.14,
+      "priority": "core",
+      "rationale": "逐本地轮次、逐段恢复阶跃是校准能否直接用于回放修正的核心统计产物。"
+    },
+    "test_outputs.py::test_record_order_shuffle_preserves_recovered_structure": {
+      "weight": 0.14,
+      "priority": "core",
+      "rationale": "输入记录行重排后结构不变，证明结果来自整档似然而非数组位置或固定映射。"
+    },
+    "test_outputs.py::test_nine_units_and_four_repeats_are_accepted": {
+      "weight": 0.019,
+      "priority": "boundary",
+      "rationale": "合法上限的设备数与回放轮数必须可运行，避免高质量档案被容量边界误拒。"
+    },
+    "test_outputs.py::test_long_series_and_minimum_collection_size_are_accepted": {
+      "weight": 0.019,
+      "priority": "boundary",
+      "rationale": "最长回放与最小设备集合的组合必须可处理，闭区间端点不能退化为严格边界。"
+    },
+    "test_outputs.py::test_break_vector_respects_six_sample_segments": {
+      "weight": 0.019,
+      "priority": "boundary",
+      "rationale": "公共断点必须保留每段至少六个采样点，否则短段会把噪声误判为环境切换。"
+    },
+    "test_outputs.py::test_extra_top_level_key_rejects_archive": {
+      "weight": 0.019,
+      "priority": "schema",
+      "rationale": "额外顶层字段可能改变批次范围，进入统计前拒收可防止静默混入其他巡测档案。"
+    },
+    "test_outputs.py::test_unknown_schema_is_refused": {
+      "weight": 0.019,
+      "priority": "schema",
+      "rationale": "旧档案结构不同，按新版联合模型解释会产生错误映射与错误公共断点。"
+    },
+    "test_outputs.py::test_boolean_repeat_count_is_refused": {
+      "weight": 0.019,
+      "priority": "schema",
+      "rationale": "布尔轮次数不是合法整数，若被当作 1 会完全改变轮次对应搜索空间。"
+    },
+    "test_outputs.py::test_boolean_series_value_is_refused": {
+      "weight": 0.019,
+      "priority": "schema",
+      "rationale": "布尔采样值若被当作 0 或 1 进入回归，会破坏残差目标和设备对应判定。"
+    },
+    "test_outputs.py::test_repeat_run_collection_size_is_enforced": {
+      "weight": 0.003,
+      "priority": "boundary",
+      "rationale": "缺少一轮记录会使轮次置换失去定义，必须在联合结构搜索前拒收。"
+    },
+    "test_outputs.py::test_extra_record_key_is_refused": {
+      "weight": 0.019,
+      "priority": "schema",
+      "rationale": "记录内的额外提示字段可能被误当工位线索，必须阻止其进入统计映射。"
+    },
+    "test_outputs.py::test_invalid_unit_identifier_is_refused": {
+      "weight": 0.019,
+      "priority": "schema",
+      "rationale": "设备编号格式错误会破坏输出键集合与跨表追溯，因此应在拟合前拒收。"
+    },
+    "test_outputs.py::test_unequal_collection_sizes_are_refused": {
+      "weight": 0.019,
+      "priority": "boundary",
+      "rationale": "设备与基准数量不等时无法形成一一映射，部分配对会让多个工位被重复使用。"
+    },
+    "test_outputs.py::test_short_run_is_refused": {
+      "weight": 0.019,
+      "priority": "boundary",
+      "rationale": "过短回放无法同时容纳六个采样点的各段，继续拟合会产生不可解释的断点。"
+    },
+    "test_outputs.py::test_unequal_series_lengths_are_refused": {
+      "weight": 0.019,
+      "priority": "schema",
+      "rationale": "序列长度不一致会使采样对齐失去定义，残差和公共断点比较不再可信。"
+    },
+    "test_outputs.py::test_out_of_range_measurement_is_refused": {
+      "weight": 0.019,
+      "priority": "boundary",
+      "rationale": "越界测量值会把残差目标拉离设备真实关系，拒收可保护联合回归结果。"
+    },
+    "test_outputs.py::test_residual_tolerance_failure_is_refused": {
+      "weight": 0.019,
+      "priority": "boundary",
+      "rationale": "超过业务容差仍写出结果会把未闭合档案用于后续巡测修正，因此必须拒收。"
+    },
+    "test_outputs.py::test_output_has_exact_fields_and_declared_rms": {
+      "weight": 0.019,
+      "priority": "supporting",
+      "rationale": "固定五个交付栏目并覆盖全部设备，保证结构结果可被校准人员完整复核。"
+    },
+    "test_outputs.py::test_output_is_compact_sorted_and_repeatable": {
+      "weight": 0.012,
+      "priority": "supporting",
+      "rationale": "稳定字节输出便于巡测档案复核、批量比较和同输入重算追踪。"
+    }
+  }
+}
