@@ -473,7 +473,7 @@ def test_boolean_repeat_count_is_refused(tmp_path: Path) -> None:
 
 def test_boolean_series_value_is_refused(tmp_path: Path) -> None:
     """题面：
-    「排列键，并保留一个行尾换行；同一输入重复运行时字节必须一致。」
+    「布尔值不算数值」
     """
 
     # REPEAT-BOOL
