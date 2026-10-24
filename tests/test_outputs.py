@@ -659,7 +659,7 @@ def test_output_has_exact_fields_and_declared_rms(tmp_path: Path) -> None:
 
 def test_output_is_compact_sorted_and_repeatable(tmp_path: Path) -> None:
     """题面：
-    「`residual_tolerance` 六项。`schema` 必须是 `"repeat-calibration-v2"`。」
+    「把同一份巡测档案重跑两遍，两次产物不得有字节差异。」
     """
 
     # REPEAT-CLI REPEAT-FORMAT REPEAT-REPEATABLE REPEAT-STDLIB
