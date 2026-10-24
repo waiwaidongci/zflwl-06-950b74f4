@@ -11,6 +11,15 @@ import pytest
 
 
 ENTRY = os.environ.get("REPEAT_CALIBRATION_ENTRY", "/app/predict.py")
+
+SAFE_ENV = {
+    "PATH": "/usr/bin:/bin",
+    "HOME": "/tmp",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONHASHSEED": "0",
+}
 REFERENCE_IDS = [
     "R-A7K2",
     "R-M4Q9",
@@ -37,9 +46,10 @@ FIELD_IDS = [
 
 def _run(source: Path, output: Path) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, ENTRY, str(source), str(output)],
+        [sys.executable, "-S", "-P", "-B", ENTRY, str(source), str(output)],
         text=True,
         capture_output=True,
+        env=SAFE_ENV,
         timeout=60,
         check=False,
     )
