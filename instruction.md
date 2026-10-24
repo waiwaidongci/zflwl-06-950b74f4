@@ -15,11 +15,11 @@ Python 与标准库。
 `repeats` 是 3 或 4 的整数，`regime_count` 是 3 或 4 的整数，布尔值不算整数。
 `residual_tolerance` 落在 0.0001 至 2（含端点），且必须是有限实数。
 
-`references` 和 `field_units` 各含 6 到 9 条记录，两边数量相同。每条记录恰好有
+两份记录表必须等长：`references` 和 `field_units` 各含 6 到 9 条记录，两边数量相同。每条记录恰好有
 `id` 与 `runs` 两个键。基准编号匹配 `R-[A-Z0-9]{4}`，设备编号匹配
 `U-[A-Z0-9]{4}`，同类编号不得重复。
 
-`runs` 的长度必须等于 `repeats`。其中每个元素都是 32 到 48 个采样点的有限数值，
+`runs` 的长度必须等于 `repeats`。逐条检查时，其中每个元素都是 32 到 48 个采样点的有限数值，
 取值在 -100 到 100 之间；布尔值不算数值。所有序列长度一致。基准记录的 `runs`
 按回放轮次 0、1、… 排列；设备记录的 `runs` 已打乱，数组位置不再表示回放轮次。
 
@@ -44,8 +44,7 @@ field[u].runs[j][t]
 
 ## 交付格式
 
-成功时写出五个栏目：`break_indices`、`drift_steps`、`matches`、`residual_rms`、
-`run_orders`。
+成功时写出五个栏目：`break_indices`、`drift_steps`、`matches`、`residual_rms`、`run_orders`。
 
 `matches` 的键是全部设备编号，值是对应的基准编号。`run_orders` 的键也是全部设备
 编号，值是按设备本地 `runs` 顺序排列的基准轮次零基下标，每个下标恰好出现一次。
