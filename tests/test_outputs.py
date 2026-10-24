@@ -249,7 +249,7 @@ def test_four_regime_archive_recovers_three_shared_breaks(tmp_path: Path) -> Non
 
 def test_swapped_run_orders_do_not_follow_input_positions(tmp_path: Path) -> None:
     """题面：
-    「`runs` 的长度必须等于 `repeats`。其中每个元素都是 32 到 48 个采样点的有限数值，」
+    「`runs` 的长度必须等于 `repeats`。」
     """
 
     # REPEAT-RUNORDER REPEAT-MODEL
